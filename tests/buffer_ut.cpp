@@ -3,7 +3,7 @@
 #include <cmath>
 
 template <typename T>
-void all_close(const T* x, const T* y, int size, T tol) {
+void require_all_close(const T* x, const T* y, int size, T tol) {
     for (int k=0; k<size; ++k) {
         REQUIRE(std::abs(x[k] - y[k]) < tol);
     }
@@ -32,7 +32,7 @@ TEST_CASE("Buffer can be created from data") {
     SECTION("and content is correct") {
         float stored[size];
         b.copy_to(stored, size);
-        all_close(data, stored, size, 1e-15f);  
+        require_all_close(data, stored, size, 1e-15f);  
     }
 }
 
@@ -43,7 +43,7 @@ TEST_CASE("Data can be copied to the buffer") {
     b.copy_from(data, size);
     float stored[size];
     b.copy_to(stored, size);
-    all_close(data, stored, size, 1e-15f);
+    require_all_close(data, stored, size, 1e-15f);
 }
 
 TEST_CASE("Copy operator works as expected") {
@@ -53,7 +53,17 @@ TEST_CASE("Copy operator works as expected") {
     complex::containers::buffer<int> b1(b0);
     int stored[size];
     b1.copy_to(stored, size);
-    all_close(data, stored, size, 1);
+    require_all_close(data, stored, size, 1);
+}
+
+TEST_CASE("Buffer can be constructed from initializer list") {
+    auto data = {1, 2, 3, 4, 5};
+    complex::containers::buffer<int> a = data;
+    const int size = 5;
+    REQUIRE(a.size() == size);
+    int stored[size];
+    a.copy_to(stored, size);
+    require_all_close(data.begin(), stored, size, 1);
 }
 
 TEST_CASE("Move constructor assigns pointer to source memory buffer") {

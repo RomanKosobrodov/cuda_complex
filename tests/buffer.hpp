@@ -1,6 +1,8 @@
 #include <cuda_runtime.h>
 #include <exception>
 #include <algorithm>   // std::min
+//#include <initializer_list>
+
 
 namespace complex {
 namespace containers {
@@ -26,6 +28,8 @@ namespace containers {
                 throw std::runtime_error("Unable to initialise buffer memory with data");
             }            
         }
+
+        buffer(const std::initializer_list<T>& v) : buffer(v.begin(), static_cast<int>(v.size())) {}
 
         buffer(const buffer& other) : buffer(other.ptr, other.size()) {}
 
