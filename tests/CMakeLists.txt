@@ -6,6 +6,7 @@ set(CUDA_COMPLEX_UT_HEADERS
 
 set(CUDA_COMPLEX_UT_SOURCES
     buffer_ut.cpp
+    complex_float_ut.cpp
     main.cpp
 )
 

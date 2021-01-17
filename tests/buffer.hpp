@@ -1,7 +1,7 @@
 #include <cuda_runtime.h>
 #include <exception>
 #include <algorithm>   // std::min
-//#include <initializer_list>
+#include <initializer_list>
 
 
 namespace complex {
